@@ -46,6 +46,19 @@ boxes.forEach((element) => {
     });
 });
 
+boxes.forEach((element) => {
+    element.addEventListener('mouseleave', (event) => {
+        if(isMouseDown) {
+            event.target.style.backgroundColor = "black";
+        }
+    });
+});
+
+boxes.forEach((element) => {
+    element.addEventListener('click', (event) => {
+            event.target.style.backgroundColor = "black";
+    });
+});
 
 let resetButton = document.createElement('button');
 resetButton.setAttribute('id','resetButton');
