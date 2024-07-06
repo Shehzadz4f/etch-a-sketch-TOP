@@ -61,15 +61,26 @@ boxes.forEach((element) => {
 });
 
 let resetButton = document.createElement('button');
+resetButton.classList.add('topButtons');
 resetButton.setAttribute('id','resetButton');
 resetButton.textContent = 'RESET';
 document.body.prepend(resetButton);
-resetButton.style.margin = '5px 0px 5px 0px';
-resetButton.style.padding = '5px 10px 5px 10px';
-resetButton.style.borderRadius = '5px 5px 5px 0px';
+
+let rgbButton = document.createElement('button');
+rgbButton.classList.add('topButtons');
+rgbButton.setAttribute('id','rgbButton');
+rgbButton.textContent = 'RANDOM COLORS';
+document.body.insertBefore(rgbButton, container);
+
+let lightToDark = document.createElement('button');
+lightToDark.classList.add('topButtons');
+lightToDark.setAttribute('id','lightToDark');
+lightToDark.textContent = 'LIGHT TO DARK EFFECT';
+document.body.insertBefore(lightToDark, container);
 
 resetButton.addEventListener('click', () => { 
     for (const box of boxes) {
         box.style.backgroundColor = "white";
     }
 });
+
