@@ -37,50 +37,106 @@ document.addEventListener('mouseleave', () => {
     isMouseDown = false;
 });
 
+//Handling RANDOM COLORS button
+let rgbToggle = false;
+
+let rgbButton = document.createElement('button');
+rgbButton.classList.add('topButtons');
+rgbButton.setAttribute('id','rgbButton');
+rgbButton.textContent = 'RANDOM OFF';
+document.body.insertBefore(rgbButton, container);
+
+function randomColor() {
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+    return `${r} ${g} ${b}`;
+} 
+
+rgbButton.addEventListener('click', () => {
+    if(!rgbToggle) {
+        rgbToggle = true;
+        rgbButton.textContent = 'RANDOM ON';
+    }
+    else {
+        rgbToggle = false;
+        rgbButton.textContent = 'RANDOM OFF'; 
+    }
+});
+
+//Handling LIGHT TO DARK EFFECT BUTTON
+let lightToDarkToggle = false;
+
+let lightToDarkBtn = document.createElement('button');
+lightToDarkBtn.classList.add('topButtons');
+lightToDarkBtn.setAttribute('id','lightToDark');
+lightToDarkBtn.textContent = 'LIGHT TO DARK EFFECT OFF';
+document.body.insertBefore(lightToDarkBtn, container);
+
+lightToDarkBtn.addEventListener('click', () => {
+    if (!lightToDarkToggle) {
+        lightToDarkToggle = true;
+        lightToDarkBtn.textContent = 'LIGHT TO DARK EFFECT ON';
+    }
+    else {
+        lightToDarkToggle = false;
+        lightToDarkBtn.textContent = 'LIGHT TO DARK EFFECT OFF';
+    }
+});
+
+let opacity = 0;
+let previousElementColor;
+let currentElementColor;
+
 let boxes = document.querySelectorAll('.boxes');
 boxes.forEach((element) => {
     element.addEventListener('mouseenter', (event) => {
-        if(isMouseDown) {
+        currentElementColor = `rgb(${randomColor()})`;
+        if(isMouseDown && !rgbToggle) {
             event.target.style.backgroundColor = "black";
+        }
+        else if(isMouseDown && rgbToggle) {
+            event.target.style.backgroundColor = currentElementColor;
+            previousElementColor = currentElementColor;
         }
     });
 });
 
 boxes.forEach((element) => {
     element.addEventListener('mouseleave', (event) => {
-        if(isMouseDown) {
+        if(isMouseDown && !rgbToggle) {
             event.target.style.backgroundColor = "black";
+        }
+        else if(isMouseDown && rgbToggle) {
+            event.target.style.backgroundColor = previousElementColor;
         }
     });
 });
 
 boxes.forEach((element) => {
     element.addEventListener('click', (event) => {
+        if(!rgbToggle) {
             event.target.style.backgroundColor = "black";
+        }
+        else if(rgbToggle) {
+            event.target.style.backgroundColor = `rgb(${randomColor()})`;
+        }
     });
 });
 
+//Handling RESET button
 let resetButton = document.createElement('button');
 resetButton.classList.add('topButtons');
 resetButton.setAttribute('id','resetButton');
 resetButton.textContent = 'RESET';
 document.body.prepend(resetButton);
 
-let rgbButton = document.createElement('button');
-rgbButton.classList.add('topButtons');
-rgbButton.setAttribute('id','rgbButton');
-rgbButton.textContent = 'RANDOM COLORS';
-document.body.insertBefore(rgbButton, container);
-
-let lightToDark = document.createElement('button');
-lightToDark.classList.add('topButtons');
-lightToDark.setAttribute('id','lightToDark');
-lightToDark.textContent = 'LIGHT TO DARK EFFECT';
-document.body.insertBefore(lightToDark, container);
-
 resetButton.addEventListener('click', () => { 
     for (const box of boxes) {
         box.style.backgroundColor = "white";
     }
 });
+
+
+
 
